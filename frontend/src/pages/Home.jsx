@@ -42,14 +42,11 @@ function Home() {
           </button>
         </div>
 
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/590/590685.png"
-          className="h-32"
-        />
+        <img src="https://img.icons8.com/?size=100&id=y06NHH_kl00a&format=png&color=000000" className="h-32" />
       </div>
 
       {/* 🟠 CATEGORY BAR */}
-      <div className="flex gap-6 mt-6 justify-center text-sm font-medium">
+      {/* <div className="flex gap-6 mt-6 justify-center text-sm font-medium">
         {["All", "Banganapalli", "Alphonso", "Himam", "Rassalu"].map(
           (cat, index) => (
             <button
@@ -59,9 +56,9 @@ function Home() {
               🥭
               <span>{cat}</span>
             </button>
-          )
+          ),
         )}
-      </div>
+      </div> */}
 
       {/* 🟢 PRODUCT GRID */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
