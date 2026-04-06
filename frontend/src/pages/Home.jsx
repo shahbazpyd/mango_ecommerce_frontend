@@ -51,7 +51,7 @@ function Home() {
       <div className="bg-yellow-100 rounded-xl p-6 flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-green-700">
-            Fresh Mangoes From Our Farm
+            Fresh Mangoes From Our Mango Farm
           </h1>
           <p className="text-gray-600 mt-2">
             Buy premium mangoes directly from farmers 🍋
@@ -59,7 +59,7 @@ function Home() {
         </div>
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/590/590685.png"
+          src="https://img.icons8.com/color/96/mango.png"
           className="h-28"
         />
       </div>

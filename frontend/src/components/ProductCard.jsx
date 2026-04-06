@@ -23,7 +23,7 @@ function ProductCard({ product, addToCart }) {
           onClick={() => addToCart(product.id)}
           className="bg-yellow-400 px-3 py-1 rounded-lg font-semibold hover:bg-yellow-500"
         >
-          Add
+          Add To Cart
         </button>
       </div>
     </div>

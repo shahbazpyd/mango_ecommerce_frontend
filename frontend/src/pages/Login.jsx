@@ -11,13 +11,14 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await API.post("auth/login/", {
-        email,
-        password,
+      const res = await API.post("token/", {
+        email: email,      // ✅ if backend supports email
+        password: password,
       });
 
-      // ✅ Save token
+      // Save tokens
       localStorage.setItem("token", res.data.access);
+      localStorage.setItem("refresh", res.data.refresh);
 
       // 🔥 Handle pending cart
       const pending = localStorage.getItem("pending_cart");
@@ -33,9 +34,11 @@ function Login() {
         localStorage.removeItem("pending_cart");
       }
 
-      navigate("/");
+      navigate("/",  { replace: true });
     } catch (err) {
-      alert("Invalid credentials ❌");
+      console.log(err.response?.data);
+
+      alert("Login failed ❌");
     }
   };
 
@@ -48,7 +51,7 @@ function Login() {
         <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
 
         <input
-          type="email"
+          type="text"
           placeholder="Email"
           className="w-full border p-2 mb-3 rounded"
           onChange={(e) => setEmail(e.target.value)}
@@ -64,16 +67,6 @@ function Login() {
         <button className="w-full bg-yellow-400 py-2 rounded font-semibold">
           Login
         </button>
-
-        <p className="text-sm mt-3 text-center">
-          Don't have an account?{" "}
-          <span
-            className="text-blue-500 cursor-pointer"
-            onClick={() => navigate("/register")}
-          >
-            Register
-          </span>
-        </p>
       </form>
     </div>
   );

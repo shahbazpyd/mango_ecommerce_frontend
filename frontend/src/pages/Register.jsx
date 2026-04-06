@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const [data, setData] = useState({
     email: "",
+    username: "",
     password: "",
-    name: "",
+    phone: "",
   });
 
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ function Register() {
       alert("Registered successfully ✅");
       navigate("/login");
     } catch (err) {
+      console.log(err.response?.data); // 🔥 IMPORTANT (see actual error)
       alert("Registration failed ❌");
     }
   };
@@ -39,14 +41,16 @@ function Register() {
       >
         <h2 className="text-xl font-bold mb-4 text-center">Register</h2>
 
+        {/* USERNAME */}
         <input
           type="text"
-          name="name"
-          placeholder="Name"
+          name="username"
+          placeholder="Username"
           className="w-full border p-2 mb-3 rounded"
           onChange={handleChange}
         />
 
+        {/* EMAIL */}
         <input
           type="email"
           name="email"
@@ -55,6 +59,16 @@ function Register() {
           onChange={handleChange}
         />
 
+        {/* PHONE */}
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          className="w-full border p-2 mb-3 rounded"
+          onChange={handleChange}
+        />
+
+        {/* PASSWORD */}
         <input
           type="password"
           name="password"
