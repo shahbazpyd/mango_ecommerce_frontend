@@ -1,16 +1,36 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import API from "../api/axios";
 
 function Navbar() {
   const navigate = useNavigate();
-  const location = useLocation(); // 🔥 important
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   // ✅ Re-check token on route change
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
-  }, [location]); // 🔥 runs on navigation
+  }, [location]);
+
+  // Fetch products for dropdown
+  useEffect(() => {
+    API.get("products/").then((res) => setProducts(res.data)).catch((err) => console.log(err));
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Logout
   const handleLogout = () => {
@@ -28,6 +48,32 @@ function Navbar() {
       >
         🥭 OurMangoFarm
       </h1>
+
+      {/* MANGOES DROPDOWN */}
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={() => setShowDropdown(!showDropdown)}
+          className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+        >
+          Mangoes ▾
+        </button>
+        {showDropdown && (
+          <div className="absolute top-full left-0 mt-1 w-56 bg-white border rounded shadow-lg max-h-64 overflow-y-auto">
+            {products.map((product) => (
+              <button
+                key={product.id}
+                onClick={() => {
+                  navigate(`/product/${product.id}`);
+                  setShowDropdown(false);
+                }}
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100 border-b last:border-b-0"
+              >
+                {product.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-4">
