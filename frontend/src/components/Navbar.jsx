@@ -20,8 +20,7 @@ function Navbar() {
   };
 
   return (
-    <div className="flex justify-between items-center px-6 py-4 shadow bg-white">
-      
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 py-4 shadow bg-white">
       {/* LOGO */}
       <h1
         onClick={() => navigate("/")}
@@ -32,17 +31,20 @@ function Navbar() {
 
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-4">
-        
         {/* ✅ CART only if logged in */}
         {isLoggedIn && (
-          <button
-            onClick={() => navigate("/cart")}
-            className="text-xl"
-          >
+          <button onClick={() => navigate("/cart")} className="text-xl">
             🛒
           </button>
         )}
-
+        {isLoggedIn && (
+          <button
+            onClick={() => navigate("/orders")}
+            className="bg-blue-500 text-white px-3 py-1 rounded"
+          >
+            My Orders
+          </button>
+        )}
         {/* AUTH */}
         {!isLoggedIn ? (
           <>

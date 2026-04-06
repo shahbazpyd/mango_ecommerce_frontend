@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [cart, setCart] = useState(null);
+  const navigate = useNavigate();
 
   // Fetch cart
   const fetchCart = async () => {
@@ -45,7 +47,6 @@ function Cart() {
 
   return (
     <div className="max-w-5xl mx-auto mt-6">
-
       <h1 className="text-2xl font-bold mb-4">🛒 Your Cart</h1>
 
       {cart.items.length === 0 ? (
@@ -67,9 +68,7 @@ function Cart() {
                   />
 
                   <div>
-                    <h2 className="font-semibold">
-                      {item.product_name}
-                    </h2>
+                    <h2 className="font-semibold">{item.product_name}</h2>
                     <p className="text-sm text-gray-500">
                       ₹{item.price_per_kg}/kg
                     </p>
@@ -101,9 +100,7 @@ function Cart() {
 
                 {/* RIGHT */}
                 <div className="text-right">
-                  <p className="font-bold">
-                    ₹{item.total_price}
-                  </p>
+                  <p className="font-bold">₹{item.total_price}</p>
 
                   <button
                     onClick={() => removeItem(item.id)}
@@ -131,6 +128,7 @@ function Cart() {
               </button>
 
               <button
+                onClick={() => navigate("/checkout")}
                 className="bg-green-500 px-4 py-2 rounded text-white"
               >
                 Checkout
