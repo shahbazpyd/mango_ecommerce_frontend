@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import API from "../api/axios";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const { fetchCartCount } = useCart();
   const navigate = useNavigate();
 
   // Fetch products
@@ -25,7 +27,7 @@ function Home() {
         JSON.stringify({
           product_id: productId,
           quantity_kg: 1,
-        })
+        }),
       );
 
       navigate("/login");
@@ -38,7 +40,7 @@ function Home() {
         product_id: productId,
         quantity_kg: 1,
       });
-
+      fetchCartCount();
       alert("Added to cart ✅");
     } catch (err) {
       console.log(err);
@@ -58,10 +60,7 @@ function Home() {
           </p>
         </div>
 
-        <img
-          src="https://img.icons8.com/color/96/mango.png"
-          className="h-28"
-        />
+        <img src="https://img.icons8.com/color/96/mango.png" className="h-28" />
       </div>
 
       {/* PRODUCTS */}
@@ -72,7 +71,6 @@ function Home() {
             product={product}
             addToCart={addToCart}
           />
-          
         ))}
       </div>
     </div>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 function Cart() {
   const [cart, setCart] = useState(null);
+    const { fetchCartCount } = useCart();
   const navigate = useNavigate();
 
   // Fetch cart
@@ -35,12 +37,14 @@ function Cart() {
   const removeItem = async (id) => {
     await API.delete(`cart/remove/${id}/`);
     fetchCart();
+    fetchCartCount();
   };
 
   // Clear cart
   const clearCart = async () => {
     await API.delete("cart/clear/");
     fetchCart();
+    fetchCartCount();
   };
 
   if (!cart) return <p>Loading...</p>;

@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import API from "../api/axios";
+import { useCart } from "../context/CartContext";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -9,11 +10,13 @@ function Navbar() {
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const { cartCount, fetchCartCount } = useCart();
 
   // ✅ Re-check token on route change
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
+    if (token) fetchCartCount();
   }, [location]);
 
   // Fetch products for dropdown
@@ -77,10 +80,15 @@ function Navbar() {
 
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-4">
-        {/* ✅ CART only if logged in */}
+        {/* ✅ CART with count badge */}
         {isLoggedIn && (
-          <button onClick={() => navigate("/cart")} className="text-xl">
+          <button onClick={() => navigate("/cart")} className="relative text-xl">
             🛒
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
           </button>
         )}
         {isLoggedIn && (

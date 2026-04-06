@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API from "../api/axios";
+import { useCart } from "../context/CartContext";
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
+  const { fetchCartCount } = useCart();
 
   useEffect(() => {
     API.get(`products/${id}/`)
@@ -28,6 +30,7 @@ function ProductDetails() {
       quantity_kg: qty,
     });
 
+    fetchCartCount();
     alert("Added to cart 🛒");
   } catch (err) {
     console.log(err.response?.data);
