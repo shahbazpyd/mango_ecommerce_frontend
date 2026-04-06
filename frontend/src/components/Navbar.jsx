@@ -49,6 +49,12 @@ function Navbar() {
         {!isLoggedIn ? (
           <>
             <button
+              onClick={() => navigate("/about")}
+              className="text-gray-700"
+            >
+              About
+            </button>
+            <button
               onClick={() => navigate("/login")}
               className="bg-yellow-400 px-3 py-1 rounded"
             >

@@ -72,6 +72,7 @@ function Home() {
             product={product}
             addToCart={addToCart}
           />
+          
         ))}
       </div>
     </div>
